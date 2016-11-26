@@ -1,17 +1,19 @@
 import React from 'react';
 import {
   ActivityIndicator,
+  Image,
   ListView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import {
   Actions,
 } from 'react-native-router-flux';
 import iTunes from 'react-native-itunes';
+
 
 var fields = [];
 fields.push('persistentId');
@@ -73,8 +75,15 @@ export default class Search extends React.Component {
       iTunes.getTracks({
         query: {
           title: text,
-        }
+        },
+        fields: [
+          'title',
+          'artist',
+          'albumArtist',
+          'artwork'
+        ],
       }).then(tracks => {
+        console.log('tracks:', tracks);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(tracks),
           isLoading: false,
@@ -92,6 +101,9 @@ export default class Search extends React.Component {
             track,
           })
         }}>
+        <Image
+          source={{uri: track.artwork }}
+          style={{ width: 100, height: 100 }}/>
         <Text style={styles.title}>{track.title}</Text>
         <Text style={styles.artist}> - {track.albumArtist}</Text>
       </TouchableOpacity>
@@ -162,7 +174,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     flex: 1,
-    height: 30,
+    height: 100,
     alignItems: 'center',
   },
   title: {

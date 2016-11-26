@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  Dimensions,
+  Image,
   InteractionManager,
   StyleSheet,
   Text,
@@ -23,10 +25,16 @@ export default class Player extends React.Component {
 
   render() {
     const { isPlaying } = this.state;
-    const { title, albumArtist } = this.props.track;
+    const { title, albumArtist, artwork } = this.props.track;
     return (
       <View
         style={styles.container}>
+        <Image
+          source={{ uri: artwork }}
+          style={{
+            height: Dimensions.get('window').width,
+            width: Dimensions.get('window').width,
+          }} />
         <Text>{title}</Text>
         <Text>{albumArtist}</Text>
         <TouchableOpacity
