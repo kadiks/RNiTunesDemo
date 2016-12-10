@@ -18,6 +18,7 @@ import Search from './Search';
 import Player from './Player';
 
 export default class App extends React.Component {
+
   render() {
     return (
       <Router>
